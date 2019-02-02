@@ -1,50 +1,51 @@
-class Deck {
-    constructor(){
-      this.deck = []
-      this.sortDeck()
 
+
+class Card {
+  constructor(suit, rank) {
+    this.name = rank + ' of ' + suit + 's'
+    this.suit = suit;
+    this.rank = rank;
+
+    //return {name:this.name, suit:this.suit, rank:this.rank}
+  }
+}
+
+class Deck {
+    constructor () {
+      this.deck = []
     }
     /*
-     * Sort the deck in order of Suit and Rank
+     * Generate a new deck of cards
      */
-    sortDeck()  {
-      this.deck = []
-
-      let card = (suit, rank) => {
-              this.name = rank + ' of ' + suit
-              this.suit = suit
-              this.rank = rank
-
-              return {name:this.name, suit:this.suit, rank:this.rank}
-      }
-
-      const suits = ['Clubs', 'Diamonds', 'Spades', 'Hearts']
-      const ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
+    generateDeck ()  {
+      const suits = ['Spade', 'Diamond', 'Club', 'Heart']
+      const ranks = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King']
 
       for (let suit in suits) {
           for (let rank in ranks) {
-              this.deck.push(card(suits[suit], ranks[rank]))
+              this.deck.push(new Card(suits[suit], ranks[rank]))
         }
       }
+      return this.deck
     }
     /*
     * Fisher–Yates Shuffle
     * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
     */
-    shuffleDeck() {
+    shuffleDeck () {
       const deck = this.deck
       let m = deck.length, i
 
-      while (m) {
-        i = Math.floor(Math.random() * m--);
-        [deck[m], deck[i]] = [deck[i], deck[m]];
+      while (m) { // m = card counter
+        i = Math.floor(Math.random() * m--); //decrement card counter
+        [deck[m], deck[i]] = [deck[i], deck[m]]; //swap array elements
       }
       return this.deck;
     }
     /*
      * Deal the cards
      */
-    deal(){
+    deal () {
       if (this.deck.length > 0) {
         return this.deck.shift()
       }
@@ -55,10 +56,19 @@ class Deck {
     /*
      * print out the deck of cards
      */
-    printDeck() {
+    printDeck () {
       for(this.card in this.deck)  {
         console.log(this.deck[this.card])
       }
+    }
+
+    replaceCard () {
+      this.deck.unshift()
+    }
+
+    clearDeck () {
+      this.deck = []
+      //this.deck.length = 0
     }
 
   }
